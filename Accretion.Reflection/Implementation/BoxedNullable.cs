@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Accretion.Intervals
+namespace Accretion.Reflection
 {
     internal readonly struct BoxedNullable : IEquatable<BoxedNullable>
     {
         public BoxedNullable(Type type, object value)
         {
-            Debug.Assert(value != null, "Value passed to the BoxedNullable constructor cannot be null.");
-            Debug.Assert(type != null, "Type passed to the BoxedNullable constructor cannot be null.");
             Debug.Assert(Nullable.GetUnderlyingType(type) == value.GetType(), "Value passed to the BoxedNullable constructor must be of the underlying type of the nullable.");
 
             NullableType = type;

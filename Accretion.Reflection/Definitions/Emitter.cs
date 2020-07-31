@@ -1,22 +1,48 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using GrEmit;
 
-namespace Accretion.Intervals
+namespace Accretion.Reflection
 {
-    internal static class Emitter
+    public class Emitter
     {
-        public static Action<GroboIL, Parameter> ForOptionalParameters { get; } = EmitDefaultParameterValue;
-        public static Action<GroboIL, Parameter> ForRequiredParameters { get; } = EmitRequiredParameter;
+        /// <summary>
+        /// An instance of the default emitter.
+        /// </summary>
+        public static Emitter Default { get; } = new Emitter();
 
-        private static void EmitDefaultParameterValue(GroboIL il, Parameter parameter)
+        /// <summary>
+        /// Emits the load of parameter to the supplied IL stream. 
+        /// The default implementation loads parameters without default values as parameters of the caller in the same position.
+        /// Parameters with default values are loaded as constants.
+        /// Optional parameters without default values are treated as required.
+        /// </summary>
+        /// <param name="il">IL stream to be written to. Cannot be <see cref="null"/>.</param>
+        /// <param name="parameter">Parameter to be loaded. Cannot be <see cref="null"/>.</param>
+        /// <exception cref="ArgumentNullException" />
+        public virtual void EmitParameterLoad(GroboIL il, ParameterInfo parameter)
         {
-            var type = parameter.Type;
+            if (il is null)
+            {
+                throw new ArgumentNullException(nameof(il));
+            }
+
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+
+            var type = parameter.ParameterType;
             var value = parameter.DefaultValue;
 
             //ByRefLike types cannot be boxed which means that as of July 2020 "value" cannot be a ByRefLike and not null
             //This may change in the future with some updates to the reflection stack, but we're in the clear with objects for now
-            if (value is null)
+            if (!parameter.HasDefaultValue)
+            {
+                EmitRequiredParameter(il, parameter);
+            }
+            else if (value is null)
             {
                 EmitDefaultTypeValue(il, type);
             }
@@ -111,7 +137,7 @@ namespace Accretion.Intervals
                     il.Call(typeof(DateTime).GetConstructor(new[] { typeof(long), typeof(DateTimeKind) }));
                     il.Ldloc(local);
                     break;
-                case UIntPtr unint: il.Ldc_IntPtr(Unsafe.As<UIntPtr, IntPtr>(ref unint)); break;
+                case UIntPtr nuint: il.Ldc_IntPtr(Unsafe.As<UIntPtr, IntPtr>(ref nuint)); break;
                 case IntPtr nint: il.Ldc_IntPtr(nint); break;
                 case Enum enumeration:
                     var underlyingType = Enum.GetUnderlyingType(enumeration.GetType());
@@ -123,10 +149,12 @@ namespace Accretion.Intervals
                     il.Newobj(boxedNullable.NullableType.GetConstructor(new[] { boxedNullable.UnderlyingType }));
                     break;
                 case string str: il.Ldstr(str); break;
-                default: throw new ArgumentException($"Value {value} of type {value.GetType()} is not supported by the emitter.");
+                default: throw new ArgumentException($"Value {value} of type {value.GetType()} is not supported by the default emitter.");
             }
         }
 
+        private static void EmitRequiredParameter(GroboIL il, ParameterInfo parameter) => il.Ldarg(parameter.Position);
+        
         private static object? As(Type targetType, object value)
         {
             //Value can be of type:
@@ -324,7 +352,5 @@ namespace Accretion.Intervals
                 return null;
             }
         }
-
-        private static void EmitRequiredParameter(GroboIL il, Parameter parameter) => il.Ldarg(parameter.Index);
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using Xunit;
 using static ILMethodsWithDefaultParameters;
 
-namespace Accretion.Intervals.Tests.Internal
+namespace Accretion.Reflection.Tests
 {
     //There are two versions of the tests: in C# and in IL
     //We have to do both because C# semantics do not allow (the compiler does not emit):
@@ -22,7 +22,7 @@ namespace Accretion.Intervals.Tests.Internal
     //Custom value types encoded with a custom CustomConstantAttribute
     //Nullables
     //Optional parameters that do not have default values
-    public class ShimGeneratorTests : TestsBase
+    public class ShimGeneratorTests
     {
         private const string LiteralString = "LiteralString";
         private const double Float64Constant = 64d;
