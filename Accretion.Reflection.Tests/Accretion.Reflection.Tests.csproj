@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ShimSource">
-      <HintPath>ShimSources.dll</HintPath>
+    <Reference Include="ShimSources">
+      <HintPath>ShimTests\ShimSources.dll</HintPath>
     </Reference>
   </ItemGroup>
 
