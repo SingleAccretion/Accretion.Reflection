@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ShimSources">
-      <HintPath>ShimGeneratorTests\ShimSources.dll</HintPath>
+    <Reference Include="ShimSource">
+      <HintPath>ShimSources.dll</HintPath>
     </Reference>
   </ItemGroup>
 

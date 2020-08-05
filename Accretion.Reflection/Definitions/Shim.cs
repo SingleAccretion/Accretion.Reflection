@@ -36,7 +36,7 @@ namespace Accretion.Reflection
 
             if (!target.ReturnType.IsAssignableFrom(source.ReturnType) && target.ReturnType != typeof(void))
             {
-                throw new ArgumentException($"Target's return type of {source.ReturnType} is not compatible with the source's return type of {source.ReturnType}.");
+                throw new ArgumentException($"Target's return type of {target.ReturnType} is not compatible with the source's return type of {source.ReturnType}.");
             }
 
             var shim = new DynamicMethod(Guid.NewGuid().ToString(), target.ReturnType, target.GetParameters().Select(x => x.ParameterType).ToArray());
