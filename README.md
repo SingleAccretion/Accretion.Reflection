@@ -40,4 +40,4 @@ var factory = CreateFactory<Class>();
 var newClass = factory.Invoke(); 
 Console.WriteLine(newClass.X); // Prints "10"
 ````
-While the default emitter should work for all current code, it is not suitable for methods with required parameters mixed in with optional ones. For the purposes of suporting custom encodings and other possible customizations, `Emitter.EmitParameterLoad` is `virtual` - you can create your own emitter and, if needed, reuse all the complex logic in the base class with `base.EmitParameterLoad`.
+While the default emitter should work for all C# current code, it is not suitable for methods with required parameters mixed in with optional ones. For the purposes of suporting custom encodings and other possible customizations, `Emitter.EmitParameterLoad` is `virtual` - you can create your own emitter and, if needed, reuse all the complex logic in the base class with `base.EmitParameterLoad`.
