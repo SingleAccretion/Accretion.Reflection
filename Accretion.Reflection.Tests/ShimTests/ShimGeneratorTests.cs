@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Accretion.Reflection.Emit;
+using GrEmit;
+using Newtonsoft.Json.Bson;
 using Xunit;
 using static ILMethodsWithDefaultParameters;
 
@@ -28,6 +30,15 @@ namespace Accretion.Reflection.Tests
         private const string LiteralString = "LiteralString";
         private const double Float64Constant = 64d;
         private const int Int32Constant = 32;
+
+        [Fact]
+        public void ThrowsOnNullInputs()
+        {
+            var placeholder = GetType().GetMethod(nameof(ThrowsOnNullInputs));
+            Assert.Throws<ArgumentNullException>(() => Shim.Create(null, placeholder, Emitter.Default));
+            Assert.Throws<ArgumentNullException>(() => Shim.Create(placeholder, null, Emitter.Default));
+            Assert.Throws<ArgumentNullException>(() => Shim.Create(placeholder, placeholder, null));
+        }
 
         [Fact]
         public void SupportsProperlyEncodedBooleanConstants()
