@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using GrEmit;
 
-namespace Accretion.Reflection
+namespace Accretion.Reflection.Emit
 {
     public static class Shim
     {

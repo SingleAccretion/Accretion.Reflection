@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using GrEmit;
 
-namespace Accretion.Reflection
+namespace Accretion.Reflection.Emit
 {
     public class Emitter
     {
