@@ -2,7 +2,7 @@
 
 A utility library that supports the usage of reflection in .NET Standard 2.0 compliant execution environments with enabled dynamic code generation.
 
-[Is available]() in a package form on Nuget.
+[Is available](https://www.nuget.org/packages/Accretion.Reflection/) in a package form on Nuget.
 
 ## Emitting shims for methods with default parameters
 
