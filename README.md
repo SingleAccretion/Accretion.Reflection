@@ -1,6 +1,6 @@
 ## Accretion.Reflection
 
-A utility library that supports the usage of reflection in .NET Standard 2.0 compliant execution environments with enabled dynamic code generation.
+A utility library that supports the usage of reflection in .NET Standard 2.0 compliant execution environments with dynamic code generation enabled.
 
 [Is available](https://www.nuget.org/packages/Accretion.Reflection/) in a package form on Nuget.
 
