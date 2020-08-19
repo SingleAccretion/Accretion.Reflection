@@ -8,7 +8,7 @@ A utility library that supports the usage of reflection in .NET Standard 2.0 com
 
 A common scenario in reflection is the discovery and invocation of third-party methods (e. g. constructors in DI systems). However, this only works seamlessly when dealing with regular methods that do not have optional parameters, and it is sometimes a requirement to support those. Some of the complexities include:
 - `MethodInfo.DefaultValue` is a very tricky API:
-  - It returns whatever is in the metadata (`.param [i]` in IL). This means that a parameter of type `Int32` can easily have a default value of `Byte` if some CLI compiler decides to optimize the assembly size this way.
+  - It returns whatever is in the metadata (`.param [i]` in IL). This means that a parameter of type `Int32` can easily have a default value of type `Byte` if some CLI compiler decides to optimize the assembly size this way.
   - It may return a value defined in a custom attribute (Roslyn compiler uses `DecimalConstantAttribute` and `DateTimeConstantAttribute` to encode constants not directly supported by the CLI).
   - It has a complex relationship with enums where `TEnum` is returned typed as `TEnum` while `TEnum?` is returned as the underlying type.
 - Passing default paramters to the desired method means using `System.Reflection.Emit` which is an advanced API with many pitfalls and the requirement of IL knowledge (for this reason, `Accretion.Reflection` uses [`GroboIL`](https://github.com/skbkontur/gremit), a wrapper around `ILGenerator` that features stack validation and many other niceties). Different types and values require distinctly different intialization techniques.
