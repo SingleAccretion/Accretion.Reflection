@@ -2731,7 +2731,7 @@
         ret
     }
 	
-	.method public hidebysig static bool MethodWithNonTrailingDefaultParameters (
+	.method public hidebysig static bool MethodWithNonTrailingOptionalParameters (
             [opt] int32 integer32,
 			[opt] int64 integer64,
 			float32 fp32,
