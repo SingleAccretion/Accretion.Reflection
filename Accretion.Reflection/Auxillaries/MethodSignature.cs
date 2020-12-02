@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace Accretion.Reflection
 {
-    public readonly struct MethodSignature
+    internal readonly struct MethodSignature
     {
         public MethodSignature(ConstructorInfo methodInfo) : this(GetMethodParameters(methodInfo), typeof(void)) { }
         public MethodSignature(MethodInfo methodInfo) : this(GetMethodParameters(methodInfo), methodInfo.ReturnType) { }
 
-        internal MethodSignature(ParameterInfo[] parameters, Type returnType) : this(parameters.Select(x => new MethodParameter(x)).ToArray(), returnType) { }
+        public MethodSignature(ParameterInfo[] parameters, Type returnType) : this(parameters.Select(x => new MethodParameter(x)).ToArray(), returnType) { }
 
         private MethodSignature(MethodParameter[] parameters, Type returnType)
         {
@@ -17,10 +17,10 @@ namespace Accretion.Reflection
             ReturnType = returnType;
         }
 
-        internal MethodParameter[] Parameters { get; }
-        internal Type ReturnType { get; }
+        public MethodParameter[] Parameters { get; }
+        public Type ReturnType { get; }
 
-        internal static MethodParameter[] GetMethodParameters(MethodBase methodBase)
+        public static MethodParameter[] GetMethodParameters(MethodBase methodBase)
         {
             var sourceParameters = methodBase.GetParameters();
             var instanceShift = methodBase.IsStatic ? 0 : 1;
