@@ -44,7 +44,7 @@ The second type of shim, `Initializer`, is meant for advanced use cases, where y
 ````C#
 var ctor = typeof(Class).GetConstructors().First();
 var rawInstance = RuntimeHelpers.GetUninitializedObject(typeof(Class));
-var initializer = Shim.Create<Action<Class>>(ctor, ConstructorDelegateKind.Factory);
+var initializer = Shim.Create<Action<Class>>(ctor, ConstructorDelegateKind.Initializer);
 initializer(rawInstance);
 Console.WriteLine(rawInstance.X); // Prints "20"
 
@@ -58,7 +58,7 @@ public delegate void RefAction<T>(ref T);
 
 var ctor = typeof(Struct).GetConstructors().First();
 var rawInstance = default(Struct);
-var initializer = Shim.Create<RefAction<Struct>>(ctor, ConstructorDelegateKind.Factory);
+var initializer = Shim.Create<RefAction<Struct>>(ctor, ConstructorDelegateKind.Initializer);
 initializer(ref rawInstance);
 Console.WriteLine(rawInstance.X); // Prints "30"
 ````
