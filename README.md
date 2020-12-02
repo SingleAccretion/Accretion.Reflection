@@ -14,7 +14,7 @@ A common scenario in reflection is the discovery and invocation of third-party m
 - Passing default paramters to the desired method means using `System.Reflection.Emit` which is an advanced API with many pitfalls and the requirement of IL knowledge. Different types and values require distinctly different intialization techniques.
 - In general, there are many moving parts: `nullref` being the equivalent of `default` (because Roslyn), `IntPtr` and `UIntPtr` being `nint` and `nuint`, pointers, nullable types, `ByRef`s and `ByRefLike`s, `Decimal`s, `DateTime`s, `String`s - it is very easy to forget something and end up with an implementation that works in simple case but falls apart in more complex ones.
 
-`DynamicMethod Accretion.Reflection.Emit.Shim.Create<TTarget>(MethodInfo source)` is meant to address the above problems by hiding the complexity behind a relatively strightforward interface. Here, `TTarget` is the type the delegate - the shim itself, `source` is a method with optional parameters. For example, if you were to invoke a factory method that has some optional parameters:
+`TTarget Accretion.Reflection.Emit.Shim.Create<TTarget>(MethodInfo source)` is meant to address the above problems by hiding the complexity behind a relatively strightforward interface. Here, `TTarget` is the type the delegate - the shim itself, `source` is a method with optional parameters. For example, if you were to invoke a factory method that has some optional parameters:
 ````C#
 using Accretion.Reflection.Emit;
 
